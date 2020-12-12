@@ -1,0 +1,7 @@
+{
+    "source_path": "./examples/",
+    "target_path": "./index.js",
+    "begin_target_mark_comment": "// init effector graph. Do not change it manual!!!",
+    "end_target_mark_comment": "// end of effector graph",
+    "file_filter": "init.ts"   
+}
