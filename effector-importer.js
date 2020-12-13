@@ -13,13 +13,15 @@ const REQUIRED_FIELDS = [
   "begin_target_mark_comment",
   "end_target_mark_comment",
 ];
-const OPTIONAL_FIELDS = ["file_filter", "depth"];
+const OPTIONAL_FIELDS = ["file_filter", "depth", "quotes_style"];
 const OPTIONAL_FIELDS_DEFAULTS = {
   file_filter: ".em.",
   depth: 30,
+  quotes_style: "double",
 };
 
 const config = getConfig();
+
 const isConfigValid = validateConfig(config);
 
 if (!isConfigValid) {
@@ -33,8 +35,10 @@ if (!isConfigValid) {
     config.depth || OPTIONAL_FIELDS_DEFAULTS.depth
   );
 
+  const sourcePart = config.source_path.replace("./", "");
   const paths = foundFiles.map(
-    ({ dir, file }) => `${dir.replace(__dirname, "")}/${file}`
+    ({ dir, file }) =>
+      `${dir.replace(`${__dirname}/${sourcePart}`, "")}/${file}`
   );
 
   doReplaceImports(makeImportsString(paths));
@@ -45,17 +49,33 @@ if (!isConfigValid) {
 function startWatchChanges(paths) {
   watch(
     config.source_path,
-    { recursive: true, filter: new RegExp(config.file_filter || ".em.") },
+    {
+      recursive: true,
+      filter: (f) => {
+        const chunks = f.split("/");
+        const length = chunks.length;
+
+        const res = new RegExp(
+          config.file_filter || OPTIONAL_FIELDS_DEFAULTS.file_filter
+        ).test(chunks[length - 1]);
+
+        return res;
+      },
+    },
     function (evt, name) {
+      const sourcePart = config.source_path.replace("./", "");
+
+      const filePath = name.replace(`${sourcePart}`, "");
+
       if (evt === "remove") {
-        paths = paths.filter((p) => p !== `/${name}`);
+        paths = paths.filter((p) => p !== `${filePath}`);
       }
 
       if (evt === "update") {
-        const isPresent = paths.find((p) => p === `/${name}`);
+        const isPresent = paths.find((p) => p === `${filePath}`);
 
         if (!isPresent) {
-          paths.push(`/${name}`);
+          paths.push(`${filePath}`);
         }
       }
 
@@ -76,7 +96,11 @@ function doReplaceImports(replacement) {
 }
 
 function makeImportsString(pathsArray) {
-  const reducer = (acc, curVal) => `${acc} \nimport ".${curVal}"`;
+  const quotesStyle =
+    config.quotes_style || OPTIONAL_FIELDS_DEFAULTS.quotes_style;
+  const quote = quotesStyle === "single" ? `'` : `"`;
+
+  const reducer = (acc, curVal) => `${acc}\nimport ${quote}.${curVal}${quote}`;
 
   return pathsArray.reduce(reducer, "");
 }
