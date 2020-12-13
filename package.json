@@ -2,7 +2,6 @@
   "name": "effector-importer",
   "version": "1.0.0",
   "description": "tool for auto import effector`s model to app root",
-  "main": "index.js",
   "author": "Victor Kulyabin",
   "license": "MIT",
   "dependencies": {
@@ -19,5 +18,8 @@
     "file_filter": ".em.",
     "target_path": "./index.js",
     "target_mark_comment": "// init effector graph. Do not change it manual!!!"
+  },
+  "bin": {
+    "effector-importer": "cli.js"
   }
 }

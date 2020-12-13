@@ -1,4 +1,11 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
+
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them. In the future, promise rejections that are not handled will
+// terminate the Node.js process with a non-zero exit code.
+process.on("unhandledRejection", (err) => {
+  throw err;
+});
 
 const watch = require("node-watch");
 const fs = require("fs");
@@ -25,7 +32,7 @@ const config = getConfig();
 const isConfigValid = validateConfig(config);
 
 if (!isConfigValid) {
-  process.exit();
+  throw "Invalid config file";
 }
 
 (async function main() {
@@ -135,7 +142,7 @@ function getConfig() {
       printMessage([`Effector importer`, "", "Invalid config json"], {
         borderColor: "red",
       });
-      process.exit();
+      throw e;
     }
   } else {
     try {
@@ -145,7 +152,7 @@ function getConfig() {
       printMessage([`Effector importer`, "", "Couldn't read package.json"], {
         borderColor: "red",
       });
-      process.exit();
+      throw e;
     }
   }
 
