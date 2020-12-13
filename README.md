@@ -78,7 +78,7 @@
 
 Не отслеживаются удаление дирректории содержащую импортируемый файл
 
-````bash
- $ rm -rf ./src/some-directory/init.ts ```
+```bash
+ $ rm -rf ./src/some-directory/init.ts
 
-````
+```
