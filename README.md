@@ -9,7 +9,7 @@
 
 ## Конфигурация
 
-### Конфигурацию можно задавайть
+### Конфигурацию можно задавать
 
 - в package.json
 
@@ -59,12 +59,19 @@
 ## Использование
 
 Добавьте пакет в проект
+
 `npm install effector-importer`
 
+или
+
+`yarn add effector-importer`
+
 Добавьте в `package.json` скрипт
+
 `"effector-importer": "effector-importer"`
 
 Добавьте скрипт к скрипту start
+
 `"start": "effector-importer & react-scripts start"`
 
 ### Проблеммы
