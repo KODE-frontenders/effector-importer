@@ -22,7 +22,7 @@ const REQUIRED_FIELDS = [
 ];
 const OPTIONAL_FIELDS = ["file_filter", "depth", "quotes_style"];
 const OPTIONAL_FIELDS_DEFAULTS = {
-  file_filter: ".em.",
+  file_filter: "^init.ts",
   depth: 30,
   quotes_style: "double",
 };
@@ -43,9 +43,10 @@ if (!isConfigValid) {
   );
 
   const sourcePart = config.source_path.replace("./", "");
+
   const paths = foundFiles.map(
     ({ dir, file }) =>
-      `${dir.replace(`${__dirname}/${sourcePart}`, "")}/${file}`
+      `${dir.replace(`${process.env.PWD}/${sourcePart}`, "")}/${file}`
   );
 
   doReplaceImports(makeImportsString(paths));

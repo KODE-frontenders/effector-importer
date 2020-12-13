@@ -13,12 +13,6 @@
   "scripts": {
     "effector-importer": "node effector-importer.js"
   },
-  "effector-importer": {
-    "source_path": "./examples/",
-    "file_filter": ".em.",
-    "target_path": "./index.js",
-    "target_mark_comment": "// init effector graph. Do not change it manual!!!"
-  },
   "bin": {
     "effector-importer": "cli.js"
   }
