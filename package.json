@@ -1,9 +1,19 @@
 {
   "name": "effector-importer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "tool for auto import effector`s model to app root",
   "author": "Victor Kulyabin",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/KODE-frontenders/effector-importer",
+    "type": "git"
+  },
+  "homepage": "https://github.com/KODE-frontenders/effector-importer",
+  "keywords": [
+    "frontend",
+    "tool",
+    "effector"
+  ],
   "dependencies": {
     "file-regex": "^3.1.0",
     "node-watch": "^0.7.0",
